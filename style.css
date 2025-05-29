@@ -1,0 +1,129 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background: linear-gradient(to right, #ff7e5f, #feb47b);
+    font-family: 'Arial', sans-serif;
+    overflow: hidden; /* Mencegah scroll saat confetti di luar area */
+}
+
+.card {
+    width: 350px;
+    height: 450px;
+    perspective: 1000px; /* Untuk efek 3D flip */
+    cursor: pointer;
+}
+
+.card-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.8s;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+}
+
+.card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.front, .back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden; /* Sembunyikan sisi belakang saat tidak menghadap */
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.front {
+    background: #fff;
+    color: #333;
+    font-size: 1.8em;
+    font-weight: bold;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="25" cy="25" r="15" fill="%23f06d06" /><circle cx="75" cy="75" r="15" fill="%2306f06d" /><circle cx="25" cy="75" r="15" fill="%236d06f0" /><circle cx="75" cy="25" r="15" fill="%23f0f006" /></svg>');
+    background-size: 50px;
+    background-position: center;
+}
+
+.front p {
+    font-size: 0.9em;
+    margin-top: 15px;
+    color: #666;
+}
+
+.back {
+    background: #fdfdfd;
+    color: #555;
+    transform: rotateY(180deg);
+    display: flex; /* Memastikan confetti bisa muncul di atas */
+    justify-content: flex-start; /* Sesuaikan posisi teks */
+    align-items: center;
+    flex-direction: column;
+    padding-top: 50px; /* Memberi ruang di atas untuk confetti */
+    position: relative;
+    overflow: hidden; /* Agar confetti tidak keluar dari kartu */
+}
+
+.back h2 {
+    color: #e94e77;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+}
+
+.back p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    max-width: 90%;
+}
+
+.signature {
+    font-style: italic;
+    margin-top: 30px;
+    color: #777;
+}
+
+/* Konfeti */
+.confetti-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Agar tidak menghalangi klik pada kartu */
+    overflow: hidden; /* Memastikan confetti tidak keluar dari container */
+}
+
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: var(--confetti-color);
+    animation: fall linear forwards;
+    opacity: 0; /* Mulai dengan tidak terlihat */
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(0) rotateZ(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1; /* Muncul setelah 10% animasi */
+    }
+    100% {
+        transform: translateY(100vh) rotateZ(720deg);
+        opacity: 0; /* Menghilang di akhir */
+    }
+}
